@@ -109,36 +109,6 @@ export const VideoTranslator: React.FC<VideoTranslatorProps> = ({
           </div>
         )}
 
-        {/* Top-Right Floating Controls matching reference */}
-        <div className="absolute top-3.5 right-3.5 flex items-center gap-2 z-10">
-          <button
-            onClick={() => setShowSettings(!showSettings)}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-black/50 hover:bg-black/70 text-white text-[11px] font-medium rounded-lg backdrop-blur-md border border-white/20 shadow-md transition-all cursor-pointer"
-            title="Ajustes de Câmera"
-          >
-            <Camera className="w-3.5 h-3.5 text-white/90" />
-            <span>Ajustar Câmera</span>
-          </button>
-
-          <button
-            onClick={onTriggerTranslation}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-medium rounded-lg backdrop-blur-md border shadow-md transition-all cursor-pointer ${
-              isTranslating
-                ? 'bg-red-600/90 text-white border-red-400 animate-pulse'
-                : 'bg-black/50 hover:bg-black/70 text-white border-white/20'
-            }`}
-            title="Gravar Sinais"
-          >
-            <span
-              className={`w-2 h-2 rounded-full ${
-                isTranslating ? 'bg-white animate-ping' : 'bg-red-500'
-              }`}
-            />
-            <Video className="w-3.5 h-3.5 text-red-400" />
-            <span>{isTranslating ? 'Gravando...' : 'Gravar Sinais'}</span>
-          </button>
-        </div>
-
         {/* Center-Bottom Overlay Controls matching the reference image */}
         <div className="absolute bottom-4 inset-x-0 flex justify-center items-center gap-4 pointer-events-none z-10">
           <div className="pointer-events-auto flex items-center gap-4 bg-black/45 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/20 shadow-lg">
@@ -158,10 +128,16 @@ export const VideoTranslator: React.FC<VideoTranslatorProps> = ({
               onClick={onTriggerTranslation}
               className="flex items-center gap-1.5 text-[11px] font-medium text-white/95 hover:text-white transition-colors cursor-pointer group"
             >
-              <div className="w-6 h-6 rounded-full bg-[#356294] group-hover:bg-blue-600 flex items-center justify-center transition-colors">
+              <div
+                className={`w-6 h-6 rounded-full flex items-center justify-center transition-colors ${
+                  isTranslating
+                    ? 'bg-red-600 animate-pulse ring-2 ring-red-400'
+                    : 'bg-[#356294] group-hover:bg-blue-600'
+                }`}
+              >
                 <Video className="w-3.5 h-3.5 text-white" />
               </div>
-              <span>Gravar Sinais</span>
+              <span>{isTranslating ? 'Gravando...' : 'Gravar Sinais'}</span>
             </button>
           </div>
         </div>
