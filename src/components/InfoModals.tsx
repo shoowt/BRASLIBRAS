@@ -52,7 +52,7 @@ export const InfoModals: React.FC<InfoModalProps> = ({
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-slate-800">Central de Ajuda</h3>
-                  <p className="text-xs text-slate-500">Como utilizar o protótipo do LibrasFlow</p>
+                  <p className="text-xs text-slate-500">Como utilizar o protótipo do BRASLIBRAS</p>
                 </div>
               </>
             )}
@@ -138,7 +138,7 @@ export const InfoModals: React.FC<InfoModalProps> = ({
 
           {type === 'help' && (
             <div className="space-y-3 text-xs text-slate-600 leading-relaxed">
-              <p>Este protótipo do <strong>LibrasFlow</strong> reproduz a experiência completa do sistema:</p>
+              <p>Este protótipo do <strong>BRASLIBRAS</strong> reproduz a experiência completa do sistema:</p>
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />

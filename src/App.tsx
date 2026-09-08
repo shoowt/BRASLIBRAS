@@ -127,7 +127,7 @@ export function App() {
     showToast(`Processando vídeo "${file.name}"...`);
 
     setTimeout(() => {
-      setCurrentText('Vídeo interpretado: "Sejam todos bem-vindos ao LibrasFlow!"');
+      setCurrentText('Vídeo interpretado: "Sejam todos bem-vindos ao BRASLIBRAS!"');
       setVideoConfidence(98);
       setTextConfidence(94);
       setIsTranslating(false);
@@ -157,7 +157,7 @@ export function App() {
             <AuthCard onLogin={handleLogin} />
 
             <p className="mt-7 text-xs text-slate-400 text-center font-medium">
-              LibrasFlow &bull; Tradução e Acessibilidade em Tempo Real
+              BRASLIBRAS &bull; Tradução e Acessibilidade em Tempo Real
             </p>
           </div>
         </div>

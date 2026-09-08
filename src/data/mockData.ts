@@ -30,7 +30,7 @@ export const INITIAL_HISTORY: TranslationHistoryItem[] = [
     timestamp: '2026-05-20T14:10:00Z',
     timeDisplay: '20 Mai: 02:10pm',
     title: 'Apresentação Projeto',
-    text: 'Sejam todos bem-vindos ao projeto LibrasFlow de acessibilidade universal.',
+    text: 'Sejam todos bem-vindos ao projeto BRASLIBRAS de acessibilidade universal.',
     confidence: 96,
   },
   {

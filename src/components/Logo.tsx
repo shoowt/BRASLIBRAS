@@ -24,7 +24,7 @@ export const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', showTex
   return (
     <div className={`flex items-center gap-2 select-none ${className}`}>
       <div className={`relative flex items-center justify-center text-blue-600 ${iconSizes[size]}`}>
-        {/* Custom LibrasFlow stylized waving hands SVG icon matching the reference */}
+        {/* Custom BRASLIBRAS stylized waving hands SVG icon matching the reference */}
         <svg
           viewBox="0 0 64 64"
           fill="none"
@@ -55,8 +55,8 @@ export const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', showTex
 
       {showText && (
         <span className={`tracking-tight text-slate-900 ${textSizes[size]}`}>
-          <span className="text-[#1e3a8a]">Libras</span>
-          <span className="text-[#2563eb] font-black">Flow</span>
+          <span className="text-[#1e3a8a]">BRAS</span>
+          <span className="text-[#2563eb] font-black">LIBRAS</span>
         </span>
       )}
     </div>

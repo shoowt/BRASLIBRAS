@@ -33,7 +33,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({
     e.preventDefault();
 
     const finalName = name.trim() || 'Mariana Silva';
-    const finalEmail = email.trim() || 'mariana.silva@librasflow.com';
+    const finalEmail = email.trim() || 'mariana.silva@braslibras.com';
 
     onLogin({
       name: finalName,
@@ -88,7 +88,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({
           </label>
           <input
             type="text"
-            placeholder="mariana.silva@librasflow.com"
+            placeholder="mariana.silva@braslibras.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full h-11 px-3.5 text-sm text-slate-800 bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#356294] focus:ring-2 focus:ring-[#356294]/20 transition-all shadow-2xs placeholder:text-slate-400"
@@ -197,8 +197,8 @@ export const AuthCard: React.FC<AuthCardProps> = ({
               <div className="space-y-3 mb-4">
                 <input
                   type="email"
-                  placeholder="mariana.silva@librasflow.com"
-                  value={forgotEmail || 'mariana.silva@librasflow.com'}
+                  placeholder="mariana.silva@braslibras.com"
+                  value={forgotEmail || 'mariana.silva@braslibras.com'}
                   onChange={(e) => setForgotEmail(e.target.value)}
                   className="w-full h-10 px-3 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#356294]"
                 />

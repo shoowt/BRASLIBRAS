@@ -35,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <header className="w-full bg-white border-b border-slate-200/90 shadow-2xs sticky top-0 z-30">
       <div className="w-full px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Left: LibrasFlow Logo */}
+        {/* Left: BRASLIBRAS Logo */}
         <div className="flex items-center gap-6">
           <Logo size="md" />
         </div>
