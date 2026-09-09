@@ -30,16 +30,21 @@ export const HistorySidebar: React.FC<HistorySidebarProps> = ({
     <aside className="w-full h-full bg-white rounded-2xl border border-slate-200/90 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.06)] overflow-hidden flex flex-col justify-between min-w-0">
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Dark Blue Header Banner matching reference image: #2D588F */}
-        <div className="bg-[#2d588f] px-5 py-4 text-white flex items-center justify-between shrink-0">
-          <h2 className="font-bold text-[13px] sm:text-sm tracking-tight text-white">
+        <div className="bg-[#2d588f] px-5 py-4 text-white flex items-center justify-between shrink-0 select-none">
+          <h2 className="font-bold text-[13px] sm:text-sm tracking-tight text-white select-none pointer-events-none">
             Histórico de Traduções
           </h2>
           <button
-            onClick={onSaveCurrent}
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              onSaveCurrent();
+            }}
+            onMouseDown={(e) => e.preventDefault()}
             title="Salvar tradução atual"
-            className="p-1 rounded-md hover:bg-white/20 transition-colors cursor-pointer text-white/90 hover:text-white"
+            className="p-1 rounded-md hover:bg-white/20 active:scale-95 transition-all cursor-pointer text-white/90 hover:text-white select-none touch-manipulation focus:outline-none"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 pointer-events-none" />
           </button>
         </div>
 
