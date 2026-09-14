@@ -7,17 +7,16 @@ import { HistorySidebar } from './components/HistorySidebar';
 import { VideoTranslator } from './components/VideoTranslator';
 import { TranslationOutput } from './components/TranslationOutput';
 import { TextToLibrasView } from './components/TextToLibrasView';
-import { ConversationMode } from './components/ConversationMode';
 import { InfoModals } from './components/InfoModals';
-import { CheckCircle2, Video, ArrowRightLeft, MessageSquare } from 'lucide-react';
+import { CheckCircle2, Video, ArrowRightLeft } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export function App() {
   // Para apresentação em aula: sempre inicia na tela de Login/Cadastro!
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
-  // Mode state: Câmera -> Texto | Texto -> Libras | Modo Conversa
-  const [currentMode, setCurrentMode] = useState<'camera_to_text' | 'text_to_libras' | 'conversation'>('camera_to_text');
+  // Mode state: Câmera -> Texto | Texto -> Libras
+  const [currentMode, setCurrentMode] = useState<'camera_to_text' | 'text_to_libras'>('camera_to_text');
 
   // Retractable sidebar state
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -181,7 +180,7 @@ export function App() {
             onOpenHelp={() => setActiveModal('help')}
           />
 
-          {/* Mode Switcher Bar (Bidirecional & Modo Conversa) */}
+          {/* Mode Switcher Bar (Bidirecional) */}
           <div className="w-full px-4 sm:px-6 lg:px-8 pt-3 pb-1 flex items-center justify-between flex-wrap gap-2 shrink-0">
             <div className="flex items-center gap-1.5 p-1 bg-white border border-slate-200/90 rounded-xl shadow-2xs">
               <button
@@ -209,19 +208,6 @@ export function App() {
                 <ArrowRightLeft className="w-3.5 h-3.5" />
                 <span>Texto &rarr; Libras (Avatar/Vídeo)</span>
               </button>
-
-              <button
-                type="button"
-                onClick={() => setCurrentMode('conversation')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
-                  currentMode === 'conversation'
-                    ? 'bg-[#2d588f] text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                }`}
-              >
-                <MessageSquare className="w-3.5 h-3.5" />
-                <span>Modo Conversa (Atendimento)</span>
-              </button>
             </div>
 
             <div className="text-[11px] text-slate-500 font-medium flex items-center gap-2">
@@ -229,7 +215,6 @@ export function App() {
               <span>
                 {currentMode === 'camera_to_text' && 'Tradução Contínua Ativa'}
                 {currentMode === 'text_to_libras' && 'Síntese Bidirecional em Libras'}
-                {currentMode === 'conversation' && 'Atendimento Acessível em Tempo Real'}
               </span>
             </div>
           </div>
@@ -238,8 +223,6 @@ export function App() {
           <main className="w-full px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex-1 flex flex-col min-h-0">
             {currentMode === 'text_to_libras' ? (
               <TextToLibrasView onBackToCamera={() => setCurrentMode('camera_to_text')} />
-            ) : currentMode === 'conversation' ? (
-              <ConversationMode />
             ) : (
               <div className="flex flex-col lg:flex-row gap-4 xl:gap-5 items-stretch flex-1 w-full min-h-0">
                 {/* Coluna 1 (Esquerda): Histórico de Traduções (Retrátil) */}
