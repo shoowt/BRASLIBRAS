@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Camera, Video, RefreshCw, Check, AlertCircle, Sliders } from 'lucide-react';
+import { Camera, Video, RefreshCw, Check, AlertCircle, Sliders, Activity } from 'lucide-react';
 import type { LibrasSignSample } from '../types';
 import { SAMPLE_SIGNS } from '../data/mockData';
 
@@ -20,6 +20,7 @@ export const VideoTranslator: React.FC<VideoTranslatorProps> = ({
   const [webcamError, setWebcamError] = useState<string | null>(null);
   const [showSettings, setShowSettings] = useState(false);
   const [activeSignId, setActiveSignId] = useState('saudacao');
+  const [showLandmarks, setShowLandmarks] = useState(true);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -107,6 +108,102 @@ export const VideoTranslator: React.FC<VideoTranslatorProps> = ({
             {/* Subtle soft vignette on edges for control contrast */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-slate-950/25 pointer-events-none" />
           </div>
+        )}
+
+        {/* Performance / Status & Landmarks Control */}
+        <div className="absolute top-3.5 left-3.5 z-10 flex items-center gap-2">
+          <div className="flex items-center gap-2 px-2.5 py-1 bg-slate-950/80 backdrop-blur-md rounded-lg border border-emerald-500/30 text-[11px] font-mono text-emerald-400 shadow-md">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Latência: 45ms</span>
+            <span className="text-slate-600">/</span>
+            <span className="text-slate-200">30 FPS</span>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setShowLandmarks(!showLandmarks)}
+            className={`px-2.5 py-1 backdrop-blur-md rounded-lg border text-[11px] font-medium flex items-center gap-1.5 transition-all cursor-pointer shadow-md ${
+              showLandmarks
+                ? 'bg-blue-600/80 border-blue-400 text-white'
+                : 'bg-slate-950/70 border-white/20 text-white/70 hover:text-white'
+            }`}
+            title="Alternar esqueleto de landmarks"
+          >
+            <Activity className="w-3.5 h-3.5" />
+            <span>Landmarks: {showLandmarks ? 'ON' : 'OFF'}</span>
+          </button>
+        </div>
+
+        {/* Câmera / Landmarks: Overlay visual simulando esqueleto e pontos de rastreamento das mãos */}
+        {showLandmarks && (
+          <svg
+            className="absolute inset-0 w-full h-full pointer-events-none z-5"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
+            {/* Right Hand Skeleton (Mão Direita Aberta na Frente) */}
+            <g className="hand-right">
+              <polyline
+                points="31.5,69 32,61 34.5,54 32.5,53 30,54 27.5,56 32,61"
+                fill="rgba(14, 165, 233, 0.15)"
+                stroke="#38bdf8"
+                strokeWidth="0.8"
+                strokeLinejoin="round"
+              />
+              <polyline points="32,61 36,58 38.5,56 41,56.5" fill="none" stroke="#38bdf8" strokeWidth="0.8" />
+              <polyline points="34.5,54 35.5,48 36.5,43.5" fill="none" stroke="#38bdf8" strokeWidth="0.8" />
+              <polyline points="32.5,53 33,46 33,39.5" fill="none" stroke="#38bdf8" strokeWidth="0.8" />
+              <polyline points="30,54 29.5,47.5 29,42" fill="none" stroke="#38bdf8" strokeWidth="0.8" />
+              <polyline points="27.5,56 25.5,51 24,47" fill="none" stroke="#38bdf8" strokeWidth="0.8" />
+
+              {[
+                [31.5, 69], [32, 61],
+                [36, 58], [38.5, 56], [41, 56.5],
+                [34.5, 54], [35.5, 48], [36.5, 43.5],
+                [32.5, 53], [33, 46], [33, 39.5],
+                [30, 54], [29.5, 47.5], [29, 42],
+                [27.5, 56], [25.5, 51], [24, 47]
+              ].map(([x, y], idx) => (
+                <circle key={`r-${idx}`} cx={x} cy={y} r="0.8" fill="#38bdf8" stroke="#0369a1" strokeWidth="0.3" />
+              ))}
+              <circle cx="41" cy="56.5" r="1.1" fill="#facc15" />
+              <circle cx="36.5" cy="43.5" r="1.1" fill="#facc15" />
+              <circle cx="33" cy="39.5" r="1.1" fill="#facc15" />
+              <circle cx="29" cy="42" r="1.1" fill="#facc15" />
+              <circle cx="24" cy="47" r="1.1" fill="#facc15" />
+            </g>
+
+            {/* Left Hand Skeleton (Mão Esquerda Horizontal) */}
+            <g className="hand-left">
+              <polyline
+                points="53.5,64 48,68 44,68 44,77 48,68"
+                fill="rgba(14, 165, 233, 0.15)"
+                stroke="#38bdf8"
+                strokeWidth="0.8"
+                strokeLinejoin="round"
+              />
+              <polyline points="50,65 51,60 50,56.5" fill="none" stroke="#38bdf8" strokeWidth="0.8" />
+              <polyline points="44,68 41,68 38.5,68" fill="none" stroke="#38bdf8" strokeWidth="0.8" />
+              <polyline points="44,71 41,71 38.5,71.5" fill="none" stroke="#38bdf8" strokeWidth="0.8" />
+              <polyline points="44,74 41,74 39,74.5" fill="none" stroke="#38bdf8" strokeWidth="0.8" />
+              <polyline points="44,77 42,77 40,77.5" fill="none" stroke="#38bdf8" strokeWidth="0.8" />
+
+              {[
+                [53.5, 64], [48, 68],
+                [51, 60], [50, 56.5],
+                [44, 68], [41, 68], [38.5, 68],
+                [44, 71], [41, 71], [38.5, 71.5],
+                [44, 74], [41, 74], [39, 74.5],
+                [44, 77], [42, 77], [40, 77.5]
+              ].map(([x, y], idx) => (
+                <circle key={`l-${idx}`} cx={x} cy={y} r="0.8" fill="#38bdf8" stroke="#0369a1" strokeWidth="0.3" />
+              ))}
+              <circle cx="38.5" cy="68" r="1.1" fill="#facc15" />
+              <circle cx="38.5" cy="71.5" r="1.1" fill="#facc15" />
+              <circle cx="39" cy="74.5" r="1.1" fill="#facc15" />
+              <circle cx="40" cy="77.5" r="1.1" fill="#facc15" />
+            </g>
+          </svg>
         )}
 
         {/* Center-Bottom Overlay Controls matching the reference image */}

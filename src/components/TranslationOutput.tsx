@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Copy, Check, Mic, UploadCloud, Volume2, Sparkles } from 'lucide-react';
+import { Copy, Check, Mic, UploadCloud, Volume2, Sparkles, HelpCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 interface TranslationOutputProps {
@@ -20,6 +20,7 @@ export const TranslationOutput: React.FC<TranslationOutputProps> = ({
   const [copied, setCopied] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [dragOver, setDragOver] = useState(false);
+  const [showUncertaintyCard, setShowUncertaintyCard] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Copy text to clipboard
@@ -82,6 +83,15 @@ export const TranslationOutput: React.FC<TranslationOutputProps> = ({
     }
   };
 
+  const handlePickSuggestion = (_signName: string, fullPhrase: string) => {
+    onTextChange(fullPhrase);
+    confetti({
+      particleCount: 25,
+      spread: 40,
+      origin: { y: 0.7 },
+    });
+  };
+
   return (
     <div className="w-full h-full bg-white rounded-2xl border border-slate-200/90 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.06)] p-5 sm:p-6 flex flex-col min-w-0">
       {/* Header matching reference: "Texto Traduzido   45%" */}
@@ -117,6 +127,65 @@ export const TranslationOutput: React.FC<TranslationOutputProps> = ({
           </div>
         )}
       </div>
+
+      {/* Sugestão de sinais: Card simulando dúvida do modelo */}
+      {showUncertaintyCard ? (
+        <div className="mb-3 p-3 bg-amber-50/95 border border-amber-200 rounded-xl shadow-xs text-xs animate-fadeIn shrink-0">
+          <div className="flex items-center justify-between font-bold text-amber-900 mb-1.5">
+            <span className="flex items-center gap-1.5 text-[11px]">
+              <HelpCircle className="w-3.5 h-3.5 text-amber-600" />
+              Dúvida do modelo (Similaridade)
+            </span>
+            <span className="text-[10px] bg-amber-100/90 text-amber-800 px-1.5 py-0.5 rounded font-mono font-semibold">
+              54% conf.
+            </span>
+          </div>
+          <p className="text-[11px] text-amber-800 mb-2">
+            Sinais similares detectados. <strong>Você quis dizer:</strong>
+          </p>
+          <div className="flex flex-wrap items-center gap-1.5">
+            <button
+              type="button"
+              onClick={() => handlePickSuggestion('Casa', 'Preciso ir para minha casa agora.')}
+              className="px-2.5 py-1 bg-white hover:bg-amber-100/80 border border-amber-300 text-amber-900 rounded-lg font-bold text-[11px] transition-all cursor-pointer shadow-2xs hover:scale-102"
+            >
+              🏠 Casa (89%)
+            </button>
+            <button
+              type="button"
+              onClick={() => handlePickSuggestion('Livro', 'Gostaria de ler este livro de estudos.')}
+              className="px-2.5 py-1 bg-white hover:bg-amber-100/80 border border-amber-300 text-amber-900 rounded-lg font-bold text-[11px] transition-all cursor-pointer shadow-2xs hover:scale-102"
+            >
+              📖 Livro (84%)
+            </button>
+            <button
+              type="button"
+              onClick={() => handlePickSuggestion('Trabalho', 'Estou no meu trabalho agora.')}
+              className="px-2.5 py-1 bg-white hover:bg-amber-100/80 border border-amber-300 text-amber-900 rounded-lg font-bold text-[11px] transition-all cursor-pointer shadow-2xs hover:scale-102"
+            >
+              🏢 Trabalho (76%)
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowUncertaintyCard(false)}
+              className="text-[10px] text-amber-700 hover:text-amber-900 underline ml-auto cursor-pointer"
+            >
+              Dispensar
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="mb-2 flex justify-end shrink-0">
+          <button
+            type="button"
+            onClick={() => setShowUncertaintyCard(true)}
+            className="text-[10px] font-semibold text-amber-700 hover:text-amber-800 bg-amber-50 hover:bg-amber-100/70 border border-amber-200 px-2 py-0.5 rounded-md flex items-center gap-1 transition-colors cursor-pointer"
+          >
+            <HelpCircle className="w-3 h-3" />
+            <span>Simular Dúvida da IA</span>
+          </button>
+        </div>
+      )}
 
       {/* Action Buttons matching reference */}
       <div className="space-y-2.5 mb-4 shrink-0">
